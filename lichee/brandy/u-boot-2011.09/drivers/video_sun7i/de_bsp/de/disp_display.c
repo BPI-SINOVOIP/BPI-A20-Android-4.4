@@ -18,6 +18,8 @@ __s32 bsp_disp_init(__disp_bsp_init_para * para)
 	__u32 i = 0, screen_id = 0;
 	__u32 num_screens;
 
+	printf("%s\n", __func__);
+
 	memset(&gdisp,0x00,sizeof(__disp_dev_t));
 
 	bsp_disp_feat_init();

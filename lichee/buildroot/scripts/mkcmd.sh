@@ -33,7 +33,7 @@ LICHEE_BOOT_DIR=${LICHEE_TOP_DIR}/boot
 LICHEE_BR_DIR=${LICHEE_TOP_DIR}/buildroot
 LICHEE_KERN_DIR=${LICHEE_TOP_DIR}/linux-3.4
 LICHEE_TOOLS_DIR=${LICHEE_TOP_DIR}/tools
-LICHEE_UBOOT_DIR=${LICHEE_TOP_DIR}/u-boot
+LICHEE_UBOOT_DIR=${LICHEE_TOP_DIR}/brandy
 LICHEE_OUT_DIR=${LICHEE_TOP_DIR}/out
 
 # make surce at the top directory of lichee
@@ -491,7 +491,7 @@ function mklichee()
 
     mk_info "build lichee ..."
     
-    mkbr && mkkernel && mkrootfs
+    mkbr && mkuboot && mkkernel && mkrootfs
     [ $? -ne 0 ] && return 1
     
     mk_info "build lichee OK."

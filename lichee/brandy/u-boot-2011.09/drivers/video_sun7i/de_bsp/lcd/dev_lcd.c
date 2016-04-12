@@ -7,6 +7,8 @@ extern void LCD_set_panel_funs(void);
 
 int lcd_init(void)
 {
+	printf("%s\n", __func__);
+	
 	sunxi_disp_get_source_ops(&g_lcd_drv.src_ops);
 	LCD_set_panel_funs();
 

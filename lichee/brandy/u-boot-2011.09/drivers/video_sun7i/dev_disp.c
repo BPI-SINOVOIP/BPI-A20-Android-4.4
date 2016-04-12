@@ -367,7 +367,7 @@ __s32 drv_disp_init(void)
 
     sunxi_pwm_init();
 
-    debug("====display init =====\n");
+    printf("====display init =====\n");
 
     memset(&para, 0, sizeof(__disp_bsp_init_para));
 	
@@ -472,7 +472,7 @@ para.reg_base[DISP_MOD_BE0]    = SUNXI_DE_BE0_BASE;
     bsp_disp_open();
     lcd_init();
 #if 0
-	if(0)
+	if(1)
    	{
         __disp_color_t bk_color;
 

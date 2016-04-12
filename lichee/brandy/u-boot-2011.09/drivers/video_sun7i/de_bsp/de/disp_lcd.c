@@ -478,6 +478,8 @@ void LCD_get_sys_config(__u32 screen_id, __disp_lcd_cfg_t *lcd_cfg)
 
     sprintf(primary_key, "lcd%d_para", screen_id);
 
+	printf("%s, screen_id = %d\n", __func__, screen_id);
+
 //lcd_used
     ret = OSAL_Script_FetchParser_Data(primary_key, "lcd_used", &value, 1);
     if(ret == 0)
@@ -1251,6 +1253,7 @@ __s32 bsp_disp_lcd_pin_cfg(__u32 screen_id, __u32 bon)
 				if(!bon) {
 					gpio_info->mul_sel = 7;
 				}	else {
+					//printf("%s: gpio_info[%d]->mul_sel = %d\n", __func__, i, gpio_info->mul_sel);
 					if((gpanel_info[screen_id].lcd_if == 3) && (gpio_info->mul_sel==2))	{
 						gpio_info->mul_sel = 3;
 					}
@@ -1328,6 +1331,8 @@ __s32 disp_lcdc_event_proc(void *parg)
 __s32 __disp_lcd_bright_curve_init(__u32 screen_id);
 __s32 disp_lcdc_init(__u32 screen_id)
 {
+	printf("%s\n", __func__);
+
 	LCD_get_sys_config(screen_id, &(gdisp.screen[screen_id].lcd_cfg));
 	gdisp.screen[screen_id].lcd_cfg.backlight_dimming = 256;
 
@@ -1344,6 +1349,7 @@ __s32 disp_lcdc_init(__u32 screen_id)
 
 	lcdc_clk_init(screen_id);
 	if(gpanel_info[screen_id].lcd_if == LCD_IF_LVDS) {
+		printf("%s, lvds clock init\n", __func__);
 		lvds_clk_init();
 	}	else if(gpanel_info[screen_id].lcd_if == LCD_IF_DSI) {
 		dsi_clk_init();

@@ -125,6 +125,8 @@ static __s32 LCD_close_flow(__u32 sel)
 
 static void LCD_power_on(__u32 sel)
 {
+	printf("%s, sel = %d\n", __func__, sel);
+	
 	sunxi_lcd_power_enable(sel, 0);//config lcd_power pin to open lcd power0
 	sunxi_lcd_pin_cfg(sel, 1);
 }

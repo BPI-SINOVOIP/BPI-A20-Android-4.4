@@ -40,6 +40,17 @@ kernel=${FLAGS_kernel}
 board=${FLAGS_board}
 module=${FLAGS_module}
 
+echo
+mk_error "#####################################"
+
+mk_error "chip=$chip"
+mk_error "platform=$platform"
+mk_error "kernel=$kernel"
+mk_error "board=$board"
+mk_error "module=$module"
+
+mk_error "#####################################"
+
 if [ "${platform}" = "${chip}" ] ; then
     platform="linux"
 fi
