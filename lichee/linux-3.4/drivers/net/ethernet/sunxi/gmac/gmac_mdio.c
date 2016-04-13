@@ -186,10 +186,10 @@ int gmac_mdio_register(struct net_device *ndev)
 				irq_str = irq_num;
 				break;
 			}
-			//pr_info("%s: PHY ID %08x at %d IRQ %s (%s)%s\n",
-			//	ndev->name, phydev->phy_id, addr,
-			//	irq_str, dev_name(&phydev->dev),
-			//	act ? " active" : "");
+			pr_info("%s: PHY ID %08x at %d IRQ %s (%s)%s\n",
+				ndev->name, phydev->phy_id, addr,
+				irq_str, dev_name(&phydev->dev),
+				act ? " active" : "");
 			found = 1;
 		}
 	}

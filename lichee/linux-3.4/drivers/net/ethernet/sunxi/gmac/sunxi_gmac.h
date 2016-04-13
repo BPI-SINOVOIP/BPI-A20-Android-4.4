@@ -34,6 +34,10 @@
 
 #define GMAC_RESOURCE_NAME	"sunxi_gmac"
 
+//Justin 2014.2.14 add Start
+#define  GMAC_PHY_POWER 
+//Justin 2014.2.14 add End
+
 enum rx_frame_status { /* IPC status */
 	good_frame = 0,
 	discard_frame = 1,
@@ -112,7 +116,9 @@ struct gmac_priv {
 	unsigned int cur_tx;
 	unsigned int dirty_tx;
 	unsigned int dma_tx_size;
-
+   //Justin 2014.2.14 add Start        
+   script_item_u *gpio_power_hd;
+   //Justin 2014.2.14 add End
 	dma_desc_t *dma_rx ;
 	dma_addr_t dma_rx_phy;
 	unsigned int cur_rx;

@@ -793,6 +793,36 @@ static void gmac_check_ether_addr(struct gmac_priv *priv)
 						   priv->ndev->dev_addr);
 }
 
+#ifdef GMAC_PHY_POWER
+void gmac_phy_power_en(struct gmac_priv *priv)
+{
+    if(!priv) return;
+
+    if (priv->gpio_power_hd){
+        priv->gpio_power_hd->gpio.data = 1;
+	printk("MIKEY(20130818): gpio_direction_output\n");
+	gpio_direction_output(priv->gpio_power_hd->gpio.gpio,1);
+        __gpio_set_value(priv->gpio_power_hd->gpio.gpio, priv->gpio_power_hd->gpio.data);
+	mdelay(200);
+    }
+
+    return;
+}
+
+void gmac_phy_power_disable(struct gmac_priv *priv)
+{
+    if(!priv) return;
+
+    if (priv->gpio_power_hd){
+        priv->gpio_power_hd->gpio.data = 0;
+        __gpio_set_value(priv->gpio_power_hd->gpio.gpio, priv->gpio_power_hd->gpio.data);
+    }
+
+    return;
+
+}
+#endif
+
 /**
  *  gmac_open - open entry point of the driver
  *  @dev : pointer to the device structure.
@@ -806,7 +836,9 @@ static int gmac_open(struct net_device *ndev)
 {
 	struct gmac_priv *priv = netdev_priv(ndev);
 	int ret;
-
+#ifdef GMAC_PHY_POWER
+    gmac_phy_power_en(priv);
+#endif
 	gmac_clk_ctl(priv, 1);
 	gmac_check_ether_addr(priv);
 
@@ -946,7 +978,9 @@ static int gmac_release(struct net_device *ndev)
 #endif
 	gmac_mdio_unregister(ndev);
 	gmac_clk_ctl(priv, 0);
-
+#ifdef GMAC_PHY_POWER
+    gmac_phy_power_disable(priv);
+#endif
 	return 0;
 }
 

@@ -75,6 +75,26 @@ static int gmac_system_init(struct gmac_priv *priv)
 		goto gpio_err;
 	}
 
+#ifdef GMAC_PHY_POWER
+
+	priv->gpio_power_hd = kmalloc(sizeof(script_item_u), GFP_KERNEL);
+	if(NULL == priv->gpio_power_hd){
+        printk(KERN_ERR "can't request memory for mos_gpio!!\n");
+    } else {
+        if(SCIRPT_ITEM_VALUE_TYPE_PIO != script_get_item("gmac_phy_power", "gmac_phy_power_en", priv->gpio_power_hd)){
+            printk(KERN_ERR "can't get item for emac_power gpio !\n");
+            kfree(priv->gpio_power_hd);
+            priv->gpio_power_hd = NULL;
+        } else {
+            if(gpio_request(priv->gpio_power_hd->gpio.gpio, "gmac_phy_power")){
+                printk(KERN_ERR "GPIO request for emac_power failed!\n");
+                kfree(priv->gpio_power_hd);
+                priv->gpio_power_hd = NULL;
+            }
+        }
+    }
+
+#endif
 gpio_err:
 	if(unlikely(ret)){
 		while(priv->gpio_hd && i--)
@@ -82,6 +102,21 @@ gpio_err:
 		priv->gpio_hd = NULL;
 		priv->gpio_cnt = 0;
 	}
+#endif
+#ifdef SUN7i_GMAC_FPGA
+	reg_value = readl(IO_ADDRESS(GPIO_BASE + 0x108));
+	reg_value |= 0x1<<20;
+	writel(reg_value, IO_ADDRESS(GPIO_BASE + 0x108));
+
+	reg_value = readl(IO_ADDRESS(GPIO_BASE + 0x10c));
+	reg_value &= ~(0x1<<29);
+	writel(reg_value, IO_ADDRESS(GPIO_BASE + 0x10c));
+
+	mdelay(200);
+
+	reg_value = readl(IO_ADDRESS(GPIO_BASE + 0x10c));
+	reg_value |= 0x1<<29;
+	writel(reg_value, IO_ADDRESS(GPIO_BASE + 0x10c));
 #endif
 
 	return ret;
@@ -215,6 +250,14 @@ static void gmac_sys_release(struct platform_device *pdev)
 	}
 #endif
 
+#ifdef GMAC_PHY_POWER
+    
+    if (priv->gpio_power_hd){
+        gpio_free(priv->gpio_power_hd->gpio.gpio);
+        kfree(priv->gpio_power_hd);
+        priv->gpio_power_hd = NULL;
+    }
+#endif
 	iounmap(priv->gmac_clk_reg);
 
 #ifndef CONFIG_GMAC_CLK_SYS
