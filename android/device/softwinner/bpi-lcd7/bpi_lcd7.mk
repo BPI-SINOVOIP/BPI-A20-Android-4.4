@@ -40,13 +40,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/softwinner/bpi-lcd7/kernel:kernel \
     device/softwinner/bpi-lcd7/fstab.sun7i:root/fstab.sun7i \
-	device/softwinner/bpi-lcd7/init.sun7i.rc:root/init.sun7i.rc \
+    device/softwinner/bpi-lcd7/init.sun7i.rc:root/init.sun7i.rc \
     device/softwinner/bpi-lcd7/init.recovery.sun7i.rc:root/init.recovery.sun7i.rc \
     device/softwinner/bpi-lcd7/ueventd.sun7i.rc:root/ueventd.sun7i.rc \
     device/softwinner/bpi-lcd7/modules/modules/nand.ko:root/nand.ko
 
 PRODUCT_COPY_FILES += \
-	device/softwinner/bpi-lcd7/configs/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
+    device/softwinner/bpi-lcd7/configs/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
 
 PRODUCT_COPY_FILES += \
     device/softwinner/bpi-lcd7/configs/camera.cfg:system/etc/camera.cfg \
@@ -61,12 +61,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
-PRODUCT_COPY_FILES += \
+#PRODUCT_COPY_FILES += \
     device/softwinner/bpi-lcd7/media/bootanimation.zip:system/media/bootanimation.zip \
     device/softwinner/bpi-lcd7/media/boot.wav:system/media/boot.wav \
     device/softwinner/bpi-lcd7/media/bootlogo.bmp:system/media/bootlogo.bmp \
+    device/softwinner/bpi-lcd7/initlogo.rle:root/initlogo.rle \
     device/softwinner/bpi-lcd7/media/initlogo.bmp:system/media/initlogo.bmp 
-    #device/softwinner/bpi-lcd7/initlogo.rle:root/initlogo.rle \
 
 # wifi & bt config file
 PRODUCT_COPY_FILES += \
@@ -158,7 +158,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # usb
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mass_storage \
-    ro.udisk.lable=WING \
+    ro.udisk.lable=BPI \
     ro.adb.secure=1
 
 # ui
