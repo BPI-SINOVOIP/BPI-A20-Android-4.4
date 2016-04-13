@@ -41,28 +41,28 @@ sprite_gpio0        =
 card_ctrl           = 0
 card_high_speed     = 1
 card_line           = 4
-sdc_d1              = port:PF0<2><1><default><default>
-sdc_d0              = port:PF1<2><1><default><default>
-sdc_clk             = port:PF2<2><1><default><default>
-sdc_cmd             = port:PF3<2><1><default><default>
-sdc_d3              = port:PF4<2><1><default><default>
-sdc_d2              = port:PF5<2><1><default><default>
+sdc_d1              = port:PF00<2><1><default><default>
+sdc_d0              = port:PF01<2><1><default><default>
+sdc_clk             = port:PF02<2><1><default><default>
+sdc_cmd             = port:PF03<2><1><default><default>
+sdc_d3              = port:PF04<2><1><default><default>
+sdc_d2              = port:PF05<2><1><default><default>
 
 [card2_boot_para]
 card_ctrl           = 2
 card_high_speed     = 1
 card_line           = 4
-sdc_cmd             = port:PC6<3><1>
-sdc_clk             = port:PC7<3><1>
-sdc_d0              = port:PC8<3><1>
-sdc_d1              = port:PC9<3><1>
+sdc_cmd             = port:PC06<3><1>
+sdc_clk             = port:PC07<3><1>
+sdc_d0              = port:PC08<3><1>
+sdc_d1              = port:PC09<3><1>
 sdc_d2              = port:PC10<3><1>
 sdc_d3              = port:PC11<3><1>
 
 [twi_para]
 twi_port            = 0
-twi_scl             = port:PB0<2><default><default><default>
-twi_sda             = port:PB1<2><default><default><default>
+twi_scl             = port:PB00<2><default><default><default>
+twi_sda             = port:PB01<2><default><default><default>
 
 [uart_para]
 uart_debug_port     = 0
@@ -70,9 +70,9 @@ uart_debug_tx       = port:PB22<2><1><default><default>
 uart_debug_rx       = port:PB23<2><1><default><default>
 
 [uart_force_debug]
-uart_debug_port          = 0
-uart_debug_tx            =port:PF2<4><1><default><default>
-uart_debug_rx            =port:PF4<4><1><default><default>
+uart_debug_port     = 0
+uart_debug_tx       =port:PF02<4><1><default><default>
+uart_debug_rx       =port:PF04<4><1><default><default>
 
 [jtag_para]
 jtag_enable = 0
@@ -151,8 +151,8 @@ gmac_phy_power_en = port:PH23<1><default><default><0>
 ;-------------------------------------------------------------------------------
 [twi0_para]
 twi0_used           = 1
-twi0_scl            = port:PB0<2><default><default><default>
-twi0_sda            = port:PB1<2><default><default><default>
+twi0_scl            = port:PB00<2><default><default><default>
+twi0_sda            = port:PB01<2><default><default><default>
 
 [twi1_para]
 twi1_used           = 1
@@ -160,19 +160,14 @@ twi1_scl            = port:PB18<2><default><default><default>
 twi1_sda            = port:PB19<2><default><default><default>
 
 [twi2_para]
-twi2_used           = 0
+twi2_used           = 1
 twi2_scl            = port:PB20<2><default><default><default>
 twi2_sda            = port:PB21<2><default><default><default>
 
 [twi3_para]
 twi3_used           = 1
-twi3_scl            = port:PI0<3><default><default><default>
-twi3_sda            = port:PI1<3><default><default><default>
-
-[twi4_para]
-twi4_used           = 0
-twi4_scl            = port:PI2<3><default><default><default>
-twi4_sda            = port:PI3<3><default><default><default>
+twi3_scl            = port:PI00<3><default><default><default>
+twi3_sda            = port:PI01<3><default><default><default>
 
 ;-------------------------------------------------------------------------------
 ;uart configuration
@@ -208,13 +203,11 @@ uart_rts            = port:PI16<3><1><default><default>
 uart_cts            = port:PI17<3><1><default><default>
 
 [uart_para3]
-uart_used           = 0
-uart_port           = 3
-uart_type           = 4
-uart_tx             = port:PH00<4><1><default><default>
-uart_rx             = port:PH01<4><1><default><default>
-uart_rts            = port:PH02<4><1><default><default>
-uart_cts            = port:PH03<4><1><default><default>
+uart_used 	    = 1
+uart_port 	    = 3
+uart_type 	    = 2
+uart_tx 	    = port:PH00<4><1><default><default>
+uart_rx 	    = port:PH01<4><1><default><default>
 
 [uart_para4]
 uart_used           = 0
@@ -238,11 +231,11 @@ uart_tx             = port:PA12<3><1><default><default>
 uart_rx             = port:PA13<3><1><default><default>
 
 [uart_para7]
-uart_used           = 0
+uart_used           = 1
 uart_port           = 7
 uart_type           = 2
-uart_tx = port:PI20<3><1><default><default>
-uart_rx = port:PI21<3><1><default><default>
+uart_tx 	    = port:PI20<3><1><default><default>
+uart_rx 	    = port:PI21<3><1><default><default>
 
 ;-------------------------------------------------------------------------------
 ;spi configuration
@@ -405,8 +398,8 @@ disp_mode               = 0
 screen0_output_type     = 1
 screen0_output_mode     = 4
 
-screen1_output_type     = 1
-screen1_output_mode     = 4
+screen1_output_type     = 3
+screen1_output_mode     = 5
 
 fb0_framebuffer_num     = 2
 fb0_format              = 10
@@ -654,7 +647,7 @@ dac3_src                = 0
 ;hdmi configuration
 ;----------------------------------------------------------------------------------
 [hdmi_para]
-hdmi_used = 0
+hdmi_used 		= 1	
 hdcp_enable             = 0
 
 [i2s2_para]
@@ -756,7 +749,7 @@ csi_d4              = port:PE08<3><default><default><default>
 csi_d5              = port:PE09<3><default><default><default>
 csi_d6              = port:PE10<3><default><default><default>
 csi_d7              = port:PE11<3><default><default><default>
-csi_reset           = port:PH13<1><default><default><0>
+csi_reset           = port:PH14<1><default><default><0>
 csi_power_en        = port:PH16<1><default><default><0>
 csi_stby            = port:PH19<1><default><default><0>
 
@@ -767,10 +760,10 @@ csi_dev_qty         = 1
 csi_stby_mode       = 0
 csi_mname           = "gc0308"
 csi_if              = 0
-csi_iovdd           = "axp20_pll"
+csi_iovdd           = ""
 csi_avdd            = ""
 csi_dvdd            = ""
-csi_vol_iovdd       = 2800
+csi_vol_iovdd       = 
 csi_vol_dvdd        = 
 csi_vol_avdd        = 
 csi_vflip           = 0
@@ -792,7 +785,7 @@ csi_d4              = port:PG08<3><default><default><default>
 csi_d5              = port:PG09<3><default><default><default>
 csi_d6              = port:PG10<3><default><default><default>
 csi_d7              = port:PG11<3><default><default><default>
-csi_reset           = port:PH13<1><default><default><0>
+csi_reset           = port:PH14<1><default><default><0>
 csi_power_en        = port:PH16<1><default><default><0>
 csi_stby            = port:PH19<1><default><default><0>
 
@@ -1106,13 +1099,14 @@ gps_rx_en           = port:PI15<1><default><default><0>
 ;wifi_mod_sel   ---  0- none, 1- bcm40181, 2- bcm40183(wifi+bt),
 ;                    3 - rtl8723as(wifi+bt), 4- rtl8189es(SM89E00),
 ;                    5 - rtl8192cu, 6 - rtl8188eu, 7 - ap6210
+;		     8 - ap6330, 9 - ap6181, 10-rtl8723au
 ;--------------------------------------------------------------------------------
 [wifi_para]
 wifi_used          = 1
 wifi_sdc_id        = 3
 wifi_usbc_id       = 2
 wifi_usbc_type     = 1
-wifi_mod_sel       = 6
+wifi_mod_sel       = 9
 wifi_power         = ""
 
 ; 1 - bcm40181 sdio wifi gpio config
@@ -1128,10 +1122,10 @@ wifi_power         = ""
 ;bcm40183_bt_host_wake  = port:PI21<0><default><default><0>
 
 ; 3 - rtl8723as sdio wifi + bt gpio config
-rtk_rtl8723as_wl_dis       = port:PH09<1><default><default><0>
-rtk_rtl8723as_bt_dis       = port:PB05<1><default><default><0>
-rtk_rtl8723as_wl_host_wake = port:PH10<0><default><default><0>
-rtk_rtl8723as_bt_host_wake = port:PI21<0><default><default><0>
+;rtk_rtl8723as_wl_dis       = port:PH09<1><default><default><0>
+;rtk_rtl8723as_bt_dis       = port:PB05<1><default><default><0>
+;rtk_rtl8723as_wl_host_wake = port:PH10<0><default><default><0>
+;rtk_rtl8723as_bt_host_wake = port:PI21<0><default><default><0>
 
 ; 4 - rtl8189es sdio wifi gpio config
 ;rtl8189es_shdn         = port:PH09<1><default><default><0>
@@ -1139,11 +1133,11 @@ rtk_rtl8723as_bt_host_wake = port:PI21<0><default><default><0>
 ; 5 - rtl8192cu usb wifi
 ; 6 - rtl8188eu usb wifi
 ; 7 - ap6210 sdio wifi + bt gpio config
-ap6xxx_wl_regon      = port:PH09<1><default><default><0>
-ap6xxx_wl_host_wake  = port:PH10<0><default><default><0>
-ap6xxx_bt_regon      = port:PB05<1><default><default><0>
-ap6xxx_bt_wake       = port:PI20<1><default><default><0>
-ap6xxx_bt_host_wake  = port:PI21<0><default><default><0>
+ap6xxx_wl_regon      = port:PH22<1><default><default><0>
+ap6xxx_wl_host_wake  = port:PH15<0><default><default><0>
+;ap6xxx_bt_regon      = 
+;ap6xxx_bt_wake       = 
+;ap6xxx_bt_host_wake  = 
 
 ;-------------------------------------------------------------------------------
 ;3G configuration
