@@ -29,12 +29,7 @@ PRODUCT_COPY_FILES += \
     device/softwinner/bpi-lcd7/modules/modules/lcd.ko:obj/lcd.ko \
     device/softwinner/bpi-lcd7/modules/modules/hdmi.ko:obj/hdmi.ko \
     device/softwinner/bpi-lcd7/modules/modules/hdcp.ko:obj/hdcp.ko \
-    device/softwinner/bpi-lcd7/modules/modules/gt82x.ko:obj/gt82x.ko \
-    device/softwinner/bpi-lcd7/modules/modules/gt811.ko:obj/gt811.ko \
     device/softwinner/bpi-lcd7/modules/modules/ft5x_ts.ko:obj/ft5x_ts.ko \
-    device/softwinner/bpi-lcd7/modules/modules/zet622x.ko:obj/zet622x.ko \
-    device/softwinner/bpi-lcd7/modules/modules/gslX680.ko:obj/gslX680.ko \
-    device/softwinner/bpi-lcd7/modules/modules/gt9xx_ts.ko:obj/gt9xx_ts.ko \
     device/softwinner/bpi-lcd7/modules/modules/sw_device.ko:obj/sw_device.ko
 
 PRODUCT_COPY_FILES += \
@@ -62,11 +57,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
 #PRODUCT_COPY_FILES += \
-    device/softwinner/bpi-lcd7/media/bootanimation.zip:system/media/bootanimation.zip \
-    device/softwinner/bpi-lcd7/media/boot.wav:system/media/boot.wav \
-    device/softwinner/bpi-lcd7/media/bootlogo.bmp:system/media/bootlogo.bmp \
-    device/softwinner/bpi-lcd7/initlogo.rle:root/initlogo.rle \
-    device/softwinner/bpi-lcd7/media/initlogo.bmp:system/media/initlogo.bmp 
+#    device/softwinner/bpi-lcd7/media/bootanimation.zip:system/media/bootanimation.zip \
+#    device/softwinner/bpi-lcd7/media/boot.wav:system/media/boot.wav \
+#    device/softwinner/bpi-lcd7/media/bootlogo.bmp:system/media/bootlogo.bmp \
+#    device/softwinner/bpi-lcd7/initlogo.rle:root/initlogo.rle \
+#    device/softwinner/bpi-lcd7/media/initlogo.bmp:system/media/initlogo.bmp 
 
 # wifi & bt config file
 PRODUCT_COPY_FILES += \
@@ -102,6 +97,13 @@ PRODUCT_COPY_FILES += \
 #   hardware/broadcom/wlan/firmware/ap6210/nvram_ap6210.txt:system/vendor/modules/nvram_ap6210.txt \
 #   hardware/broadcom/wlan/firmware/ap6210/bcm20710a1.hcd:system/vendor/modules/bcm20710a1.hcd
 
+# ap6210 sdio wifi fw and nvram
+PRODUCT_COPY_FILES += \
+    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2.bin:system/vendor/modules/fw_bcm40181a2.bin \
+    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_apsta.bin:system/vendor/modules/fw_bcm40181a2_apsta.bin \
+    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_p2p.bin:system/vendor/modules/fw_bcm40181a2_p2p.bin \
+    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/nvram_ap6181.txt:system/vendor/modules/nvram_ap6181.txt \
+
 # 3G Data Card Packages
 PRODUCT_PACKAGES += \
     u3gmonitor \
@@ -128,13 +130,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libargs=-d/dev/ttyUSB2 \
     rild.libpath=libsoftwinner-ril-4.4.so
-    
-PRODUCT_COPY_FILES += \
-    device/softwinner/bpi-lcd7/initlogo.rle:root/initlogo.rle \
-    device/softwinner/bpi-lcd7/media/bootanimation.zip:system/media/bootanimation.zip \
-    device/softwinner/bpi-lcd7/media/boot.wav:system/media/boot.wav \
-    device/softwinner/bpi-lcd7/media/bootlogo.bmp:system/media/bootlogo.bmp \
-    device/softwinner/bpi-lcd7/media/initlogo.bmp:system/media/initlogo.bmp
 
 # When set ro.sys.adaptive_memory=1, firmware can adaptive different dram size.
 # And dalvik vm parameters configuration will become invalid.
@@ -184,13 +179,13 @@ $(call inherit-product-if-exists, device/softwinner/bpi-lcd7/modules/modules.mk)
 
 # Overrides
 PRODUCT_CHARACTERISTICS := tablet
-PRODUCT_BRAND := Android
+PRODUCT_BRAND := BPI
 PRODUCT_NAME := bpi_lcd7
 PRODUCT_DEVICE := bpi-lcd7
-PRODUCT_MODEL := AOSP on wing
-PRODUCT_MANUFACTURER := Allwinner
+PRODUCT_MODEL := BPI M1Plus
+PRODUCT_MANUFACTURER := SINOVOIP
 
 PRODUCT_PROPERTY_OVERRIDES += \
-		persist.sys.timezone=America/Los_Angeles
+		persist.sys.timezone=Asia/Shanghai
 
-include device/softwinner/wing-common/prebuild/google/products/gms.mk
+#include device/softwinner/wing-common/prebuild/google/products/gms.mk

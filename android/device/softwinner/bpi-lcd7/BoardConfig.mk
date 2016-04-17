@@ -28,8 +28,8 @@ SW_BOARD_TOUCH_RECOVERY :=true
 # wifi and bt configuration
 
 # 1. Wifi Configuration
-BOARD_WIFI_VENDOR := realtek
-#BOARD_WIFI_VENDOR := broadcom
+#BOARD_WIFI_VENDOR := realtek
+BOARD_WIFI_VENDOR := broadcom
 
 # 1.1 realtek wifi support
 ifeq ($(BOARD_WIFI_VENDOR), realtek)
@@ -75,7 +75,12 @@ ifeq ($(BOARD_WIFI_VENDOR), broadcom)
     #WIFI_DRIVER_FW_PATH_P2P    := "/system/vendor/modules/fw_bcm40183b2_p2p.bin"
     #WIFI_DRIVER_FW_PATH_AP     := "/system/vendor/modules/fw_bcm40183b2_apsta.bin"
 
-    SW_BOARD_USR_WIFI := AP6210
+    #SW_BOARD_USR_WIFI := AP6210
+    #WIFI_DRIVER_FW_PATH_STA    := "/system/vendor/modules/fw_bcm40181a2.bin"
+    #WIFI_DRIVER_FW_PATH_P2P    := "/system/vendor/modules/fw_bcm40181a2_p2p.bin"
+    #WIFI_DRIVER_FW_PATH_AP     := "/system/vendor/modules/fw_bcm40181a2_apsta.bin"
+
+    SW_BOARD_USR_WIFI := AP6181
     WIFI_DRIVER_FW_PATH_STA    := "/system/vendor/modules/fw_bcm40181a2.bin"
     WIFI_DRIVER_FW_PATH_P2P    := "/system/vendor/modules/fw_bcm40181a2_p2p.bin"
     WIFI_DRIVER_FW_PATH_AP     := "/system/vendor/modules/fw_bcm40181a2_apsta.bin"
