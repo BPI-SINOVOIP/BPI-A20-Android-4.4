@@ -13,4 +13,6 @@
 /devices/platform/sw-ehci.1             auto                vfat    defaults                                                                wait,check,voldmanaged=usbhost:auto
 /devices/platform/sw_hcd_host0          auto                vfat    defaults                                                                wait,check,voldmanaged=usbhost:auto
 /devices/platform/sw-ohci.1             auto                vfat    defaults                                                                wait,check,voldmanaged=usbhost:auto
+/devices/platform/sw-ehci.2             auto                vfat    defaults                                                                wait,check,voldmanaged=usbhost:auto
+/devices/platform/sw-ohci.2             auto                vfat    defaults                                                                wait,check,voldmanaged=usbhost:auto
 /dev/block/zram0 none swap defaults zramsize=134217728
