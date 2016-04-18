@@ -1037,8 +1037,8 @@ product_name        = "BPI-M1Plus"
 serial_number       = "0001"
 
 [msc_feature]
-vendor_name         = "USB 2.0"
-product_name        = "USB Flash Driver"
+vendor_name         = "SINOVOIP"
+product_name        = "BPI-M1Plus"
 release             = 100
 luns                = 2
 
@@ -1318,7 +1318,7 @@ spdif_din           =
 ;--------------------------------------------------------------------------------
 [audio_para]
 audio_used          = 1
-audio_pa_ctrl        = port:PH15<1><default><default><0>
+audio_pa_ctrl        = port:PH26<1><default><default><0>
 
 [switch_para]
 switch_used = 0
