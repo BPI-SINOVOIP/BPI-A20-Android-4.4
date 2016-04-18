@@ -4,10 +4,18 @@ cd ./lichee
 cd ..
 cd ./android
 ls
+#source build/envsetup.sh
+#lunch bpi_lcd7-eng
+#extract-bsp
+#make -j8
+#pack
+
+
 source build/envsetup.sh
-lunch bpi_lcd7-eng
+lunch bpi_lcd7_lvds-eng
 extract-bsp
 make -j8
 pack
+
 cd ../lichee/tools/pack
 ls -l

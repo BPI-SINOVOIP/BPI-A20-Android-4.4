@@ -31,7 +31,7 @@ function build_uboot()
             make -j${jobs} ${LICHEE_CHIP} CROSS_COMPILE=arm-linux-gnueabi-
             [ $? -ne 0 ] && exit 1
             cp -f u-boot.bin ../out/${LICHEE_PLATFORM}/common/
-	    cp -f u-boot.bin ../tools/pack/chips/${LICHEE_CHIP}/bin/u-boot-${LICHEE_CHIP}.bin
+	    #cp -f u-boot.bin ../tools/pack/chips/${LICHEE_CHIP}/bin/u-boot-${LICHEE_CHIP}.bin
             ;;
     esac
 }
