@@ -228,10 +228,15 @@ void eGon2_start( void )
 
 		if(eGon2_storage_type_set() == 1)
 		{
+#ifdef BPI  /* always bootup for fex file dd single */
+
 			if(!BT1_head.boot_head.platform[7])
 			{
 				str_pointer_array[0] = str_array1;
 			}
+#else
+			eGon2_printf("[BPI]: Always run boot.axf (BT1_head.boot_head.platform[7] = %d)\n", BT1_head.boot_head.platform[7]);
+#endif
 		}
 
         eGon2_run_app(1, str_pointer_array);
