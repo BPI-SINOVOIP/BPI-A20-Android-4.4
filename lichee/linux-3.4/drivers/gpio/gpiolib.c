@@ -1753,8 +1753,11 @@ static void gpiolib_dbg_show(struct seq_file *s, struct gpio_chip *chip)
 	int			is_out;
 
 	for (i = 0; i < chip->ngpio; i++, gpio++, gdesc++) {
+
+		/* bpi, show all gpios
 		if (!test_bit(FLAG_REQUESTED, &gdesc->flags))
 			continue;
+		*/
 
 		is_out = test_bit(FLAG_IS_OUT, &gdesc->flags);
 		seq_printf(s, " gpio-%-3d (%-20.20s) %s %s",
