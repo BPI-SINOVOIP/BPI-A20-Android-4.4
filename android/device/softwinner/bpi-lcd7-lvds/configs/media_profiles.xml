@@ -81,20 +81,7 @@
   <!-- Front Camera -->
   
   <CamcorderProfiles cameraId="0">
-        
-        <EncoderProfile quality="720p" fileFormat="mp4" duration="30">
-            <Video codec="h264"
-                   bitRate="3000000"
-                   width="1280"
-                   height="720"
-                   frameRate="30" />
-            
-            <Audio codec="aac"
-                   bitRate="128000"
-                   sampleRate="44100"
-                   channels="1" />
-        </EncoderProfile>
-        
+
         <EncoderProfile quality="480p" fileFormat="mp4" duration="30">
             <Video codec="h264"
                    bitRate="1500000"
@@ -108,20 +95,7 @@
                    channels="1" />
         </EncoderProfile>
 
-        <EncoderProfile quality="timelapse720p" fileFormat="mp4" duration="30">
-            <Video codec="h264"
-                   bitRate="3000000"
-                   width="1280"
-                   height="720"
-                   frameRate="30" />
-            <!-- audio setting is ignored -->
-            <Audio codec="aac"
-                   bitRate="128000"
-                   sampleRate="44100"
-                   channels="1" />
-	    	</EncoderProfile>
-	    	
-	    	<EncoderProfile quality="timelapse480p" fileFormat="mp4" duration="30">
+    	<EncoderProfile quality="timelapse480p" fileFormat="mp4" duration="30">
             <Video codec="h264"
                    bitRate="1500000"
                    width="640"

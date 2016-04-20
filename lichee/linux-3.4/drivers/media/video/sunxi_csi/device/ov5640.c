@@ -1039,9 +1039,9 @@ static struct regval_list sensor_1080p_regs[] = { //1080: 1920*1080
 	//pll and clock setting
 	{{0x30,0x34},{0x18}},
 #ifndef CSI_VER_FOR_FPGA
-	{{0x30,0x35},{0x11}},	//0x11:30fps 0x21:15fps
+	{{0x30,0x35},{0x21}},	//0x11:30fps 0x21:15fps
 #else
-	{{0x30,0x35},{0x11}},	//0x11:30fps 0x21:15fps 0x41:7.5fps
+	{{0x30,0x35},{0x41}},	//0x11:30fps 0x21:15fps 0x41:7.5fps
 #endif	
 	{{0x30,0x36},{0x54}},
 	{{0x30,0x37},{0x13}},
@@ -1114,7 +1114,7 @@ static struct regval_list sensor_1080p_regs[] = { //1080: 1920*1080
 	{{0x50,0x01},{0x83}}, //ISP effect
 //	{{0x35,0x03},{0x00}},//AEC enable
 	
-	{{0x30,0x2c},{0x42}},//bit[7:6]: output drive capability
+	{{0x30,0x2c},{0x82}},//bit[7:6]: output drive capability
 						//00: 1x   01: 2x  10: 3x  11: 4x 
 	//power down release
 //	{{0x30,0x08},{0x02}},     
@@ -1127,7 +1127,7 @@ static struct regval_list sensor_720p_regs[] = { //1280*720
 //	//pll and clock setting
 	{{0x30,0x34},{0x18}},
 #ifndef CSI_VER_FOR_FPGA
-	{{0x30,0x35},{0x21}},	//0x11:60fps 0x21:30fps 0x41:15fps
+	{{0x30,0x35},{0x41}},	//0x11:60fps 0x21:30fps 0x41:15fps
 #else
 	{{0x30,0x35},{0x41}},	//0x11:60fps 0x21:30fps 0x41:15fps 0xa1:7.5fps
 #endif
@@ -1304,7 +1304,7 @@ static struct regval_list sensor_vga_regs[] = { //VGA:  640*480
 //	//pll and clock setting
 	{{0x30,0x34},{0x1a}},                
 #ifndef CSI_VER_FOR_FPGA
-	{{0x30,0x35},{0x11}},                             
+	{{0x30,0x35},{0x21}},                             
 #else
 	{{0x30,0x35},{0x21}},                            
 	//modified by heyihang.Jan 19, 2013
@@ -4562,7 +4562,7 @@ static int sensor_s_fps(struct v4l2_subdev *sd)
 //	}
 	
 	//msleep(500);
-	csi_dev_dbg("set frame rate %d\n",info->tpf.denominator/info->tpf.numerator);
+	csi_dev_print("set frame rate %d\n",info->tpf.denominator/info->tpf.numerator);
 	
 	return 0;
 }
@@ -4674,7 +4674,7 @@ static int sensor_s_fmt(struct v4l2_subdev *sd,
 	if(info->capture_mode == V4L2_MODE_VIDEO || info->capture_mode == V4L2_MODE_PREVIEW)
 	{
 		//video
-    	//sensor_s_fps(sd);
+    	sensor_s_fps(sd);
     	
 #ifdef AUTO_FPS		
 		if(info->capture_mode == V4L2_MODE_PREVIEW) {
