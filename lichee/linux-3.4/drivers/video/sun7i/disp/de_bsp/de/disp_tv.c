@@ -343,6 +343,8 @@ __s32 BSP_disp_tv_open(__u32 sel)
         Disp_TVEC_Open(sel);
 
         Disp_Switch_Dram_Mode(DISP_OUTPUT_TYPE_TV, tv_mod);
+
+#if 0   /* bpi, codec driver will request pa gpio */
 #ifdef __LINUX_OSAL__
         {
             disp_gpio_set_t  gpio_info[1];
@@ -365,6 +367,8 @@ __s32 BSP_disp_tv_open(__u32 sel)
             }
         }
 #endif
+#endif
+
         gdisp.screen[sel].b_out_interlace = Disp_get_screen_scan_mode(tv_mod);
         gdisp.screen[sel].status |= TV_ON;
         gdisp.screen[sel].lcdc_status |= LCDC_TCON1_USED;
@@ -388,7 +392,8 @@ __s32 BSP_disp_tv_close(__u32 sel)
         tve_clk_off(sel);
         image_clk_off(sel, 1);
         lcdc_clk_off(sel);
-        
+
+#if 0   /* bpi, codec driver will request pa gpio */
 #ifdef __LINUX_OSAL__
         {
             disp_gpio_set_t  gpio_info[1];
@@ -414,6 +419,7 @@ __s32 BSP_disp_tv_close(__u32 sel)
                 }
             }
         }
+#endif
 #endif
 		gdisp.screen[sel].b_out_interlace = 0;
         gdisp.screen[sel].status &= TV_OFF;

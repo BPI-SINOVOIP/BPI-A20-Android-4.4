@@ -1938,7 +1938,7 @@ static int __init sun7i_codec_probe(struct platform_device *pdev)
 		return -EFAULT;
 	}
 	/*request gpio*/
-	req_status = gpio_request(item.gpio.gpio, NULL);
+	req_status = gpio_request(item.gpio.gpio, "sun7i_codec");
 	if (0 != req_status) {
 		printk("request gpio failed!\n");
 	}
