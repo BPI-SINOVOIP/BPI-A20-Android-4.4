@@ -251,7 +251,7 @@ function do_pack_android()
     cp -f chips/${PACK_CHIP}/configs/${PACK_PLATFORM}/default/*           out/
     cp -f chips/${PACK_CHIP}/configs/${PACK_PLATFORM}/${PACK_BOARD}/*.fex out/
     cp -f chips/${PACK_CHIP}/configs/${PACK_PLATFORM}/${PACK_BOARD}/*.cfg out/ 2>> /dev/null
-    
+
     do_debug
     do_parse
    
@@ -261,6 +261,9 @@ function do_pack_android()
         rm -rf out/bootfs/boot.axf
         mv -v out/bootfs/boot_signature.axf out/bootfs/boot.axf
     fi
+
+    # bpi, board specific bootlogo
+    cp -f chips/${PACK_CHIP}/configs/${PACK_PLATFORM}/${PACK_BOARD}/bootlogo.bmp out/bootfs/os_show/
 
     cp -f eGon/boot0_nand.bin   out/boot0_nand.bin
     cp -f eGon/boot1_nand.bin   out/boot1_nand.fex
