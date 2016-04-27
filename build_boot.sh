@@ -5,7 +5,7 @@ cd ..
 cd ./android
 ls
 source build/envsetup.sh
-lunch bpi_lcd7_lvds-eng
+lunch bpi_lcd7_lvds-userdebug
 extract-bsp
 make -j8 bootimage
 pack

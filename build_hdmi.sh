@@ -12,9 +12,9 @@ ls
 
 
 source build/envsetup.sh
-lunch bpi_lcd7_lvds-eng
+lunch bpi_lcd7_lvds-userdebug
 extract-bsp
-make -j8
+make -j4
 pack
 
 cd ../lichee/tools/pack
