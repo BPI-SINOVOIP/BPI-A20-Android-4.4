@@ -56,8 +56,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
-#PRODUCT_COPY_FILES += \
-#    device/softwinner/bpi-lcd7-lvds/media/bootanimation.zip:system/media/bootanimation.zip \
+PRODUCT_COPY_FILES += \
+    device/softwinner/bpi-lcd7-lvds/media/bootanimation.zip:system/media/bootanimation.zip \
 #    device/softwinner/bpi-lcd7-lvds/media/boot.wav:system/media/boot.wav \
 #    device/softwinner/bpi-lcd7-lvds/media/bootlogo.bmp:system/media/bootlogo.bmp \
 #    device/softwinner/bpi-lcd7-lvds/initlogo.rle:root/initlogo.rle \
@@ -97,12 +97,12 @@ PRODUCT_COPY_FILES += \
 #   hardware/broadcom/wlan/firmware/ap6210/nvram_ap6210.txt:system/vendor/modules/nvram_ap6210.txt \
 #   hardware/broadcom/wlan/firmware/ap6210/bcm20710a1.hcd:system/vendor/modules/bcm20710a1.hcd
 
-# ap6210 sdio wifi fw and nvram
-PRODUCT_COPY_FILES += \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2.bin:system/vendor/modules/fw_bcm40181a2.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_apsta.bin:system/vendor/modules/fw_bcm40181a2_apsta.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_p2p.bin:system/vendor/modules/fw_bcm40181a2_p2p.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/nvram_ap6181.txt:system/vendor/modules/nvram_ap6181.txt \
+# ap6181 sdio wifi fw and nvram
+#PRODUCT_COPY_FILES += \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2.bin:system/vendor/modules/fw_bcm40181a2.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_apsta.bin:system/vendor/modules/fw_bcm40181a2_apsta.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_p2p.bin:system/vendor/modules/fw_bcm40181a2_p2p.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/nvram_ap6181.txt:system/vendor/modules/nvram_ap6181.txt \
 
 # 3G Data Card Packages
 PRODUCT_PACKAGES += \

@@ -97,12 +97,12 @@ PRODUCT_COPY_FILES += \
 #   hardware/broadcom/wlan/firmware/ap6210/nvram_ap6210.txt:system/vendor/modules/nvram_ap6210.txt \
 #   hardware/broadcom/wlan/firmware/ap6210/bcm20710a1.hcd:system/vendor/modules/bcm20710a1.hcd
 
-# ap6210 sdio wifi fw and nvram
-PRODUCT_COPY_FILES += \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2.bin:system/vendor/modules/fw_bcm40181a2.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_apsta.bin:system/vendor/modules/fw_bcm40181a2_apsta.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_p2p.bin:system/vendor/modules/fw_bcm40181a2_p2p.bin \
-    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/nvram_ap6181.txt:system/vendor/modules/nvram_ap6181.txt \
+# ap6181 sdio wifi fw and nvram
+#PRODUCT_COPY_FILES += \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2.bin:system/vendor/modules/fw_bcm40181a2.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_apsta.bin:system/vendor/modules/fw_bcm40181a2_apsta.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/fw_bcm40181a2_p2p.bin:system/vendor/modules/fw_bcm40181a2_p2p.bin \
+#    hardware/broadcom/wlan/bcmdhd/firmware/ap6181/nvram_ap6181.txt:system/vendor/modules/nvram_ap6181.txt \
 
 # 3G Data Card Packages
 PRODUCT_PACKAGES += \
