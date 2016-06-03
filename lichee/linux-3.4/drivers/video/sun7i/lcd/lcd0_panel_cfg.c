@@ -139,6 +139,7 @@ void spi_24bit_3wire(__u32 tx)
 
 static __s32 LCD_open_flow(__u32 sel)
 {
+	printk("[BPI_LCD]%s\n", __func__);
 	LCD_OPEN_FUNC(sel, LCD_power_on, 50);           //open lcd power, and delay 50ms
 	LCD_OPEN_FUNC(sel, LCD_panel_init, 50);         //open lcd controller, and delay 100ms
 	LCD_OPEN_FUNC(sel, TCON_open,	200);           //open lcd power, than delay 200ms
@@ -148,6 +149,7 @@ static __s32 LCD_open_flow(__u32 sel)
 
 static __s32 LCD_close_flow(__u32 sel)
 {	
+	printk("[BPI_LCD]%s\n", __func__);
 	LCD_CLOSE_FUNC(sel, LCD_bl_close, 0);           //close lcd backlight, and delay 0ms
 	LCD_CLOSE_FUNC(sel, LCD_panel_exit, 0);         //close lcd controller, and delay 0ms
 	LCD_CLOSE_FUNC(sel, TCON_close,	50);            //open lcd power, than delay 200ms
@@ -157,6 +159,7 @@ static __s32 LCD_close_flow(__u32 sel)
 
 static void LCD_power_on(__u32 sel)
 {
+		printk("[BPI_LCD]%s\n", __func__);
         LCD_POWER_EN(sel, 1);//config lcd_power pin to open lcd power
 }
 
@@ -167,6 +170,7 @@ static void LCD_power_off(__u32 sel)
 
 static void LCD_bl_open(__u32 sel)
 {
+		printk("[BPI_LCD]%s\n", __func__);
         LCD_PWM_EN(sel, 1);//open pwm module
         LCD_BL_EN(sel, 1);//config lcd_bl_en pin to open lcd backlight
 }
@@ -179,6 +183,7 @@ static void LCD_bl_close(__u32 sel)
 
 static void LCD_panel_init(__u32 sel)
 {
+		printk("[BPI_LCD]%s\n", __func__);
         __panel_para_t *info = kmalloc(sizeof(__panel_para_t), GFP_KERNEL | __GFP_ZERO);
         lcd_get_panel_para(sel, info);
         if(info->lcd_if == LCD_IF_HV2DSI)
@@ -191,6 +196,7 @@ static void LCD_panel_init(__u32 sel)
 
 static void LCD_panel_exit(__u32 sel)
 {
+		printk("[BPI_LCD]%s\n", __func__);
         __panel_para_t *info = kmalloc(sizeof(__panel_para_t), GFP_KERNEL | __GFP_ZERO);
         lcd_get_panel_para(sel, info);
         if(info->lcd_if == LCD_IF_HV2DSI)
@@ -219,6 +225,8 @@ void LCD_get_panel_funs_0(__lcd_panel_fun_t * fun)
 
 void lp079x01_init(void)
 {
+	printk("[BPI_LCD]%s, 20160530\n", __func__);
+	
         lcd_2828_rst(0);
         lcd_panel_rst(0);
         lcd_2828_pd(0);
@@ -227,28 +235,28 @@ void lp079x01_init(void)
         lcd_panel_rst(1);
         LCD_delay_ms(50);
 
-	spi_24bit_3wire(0x7000B1);  //VSA=50, HAS=64
-	spi_24bit_3wire(0x723240);
+	spi_24bit_3wire(0x7000B1);  //VSA=4, HAS=24
+	spi_24bit_3wire(0x720418);
 
-	spi_24bit_3wire(0x7000B2); //VBP=30+50, HBP=56+64
-	spi_24bit_3wire(0x725078);
+	spi_24bit_3wire(0x7000B2); //VBP=12, HBP=48
+	spi_24bit_3wire(0x720C30);
 
-	spi_24bit_3wire(0x7000B3); //VFP=36, HFP=60
-	spi_24bit_3wire(0x72243C);
+	spi_24bit_3wire(0x7000B3); //VFP=8, HFP=32
+	spi_24bit_3wire(0x720820);
 
-	spi_24bit_3wire(0x7000B4); //HACT=768
-	spi_24bit_3wire(0x720300);
+	spi_24bit_3wire(0x7000B4); //HACT=800
+	spi_24bit_3wire(0x720320);
 
-	spi_24bit_3wire(0x7000B5); //VACT=1240
-	spi_24bit_3wire(0x720400);
+	spi_24bit_3wire(0x7000B5); //VACT=1280
+	spi_24bit_3wire(0x720500);
 
 	spi_24bit_3wire(0x7000B6);
 	//todo, cfg to 18bpp packed
-	spi_24bit_3wire(0x72000B); //0x720009:burst mode, 18bpp packed
+	spi_24bit_3wire(0x72000A); //0x720009:burst mode, 18bpp packed
 														 //0x72000A:burst mode, 18bpp loosely packed
 							   						 //0x72000B:burst mode, 24bpp 
 							   						 
-	spi_24bit_3wire(0x7000DE); //no of lane=4
+	spi_24bit_3wire(0x7000DE); //number of lane=4
 	spi_24bit_3wire(0x720003);
 
 	spi_24bit_3wire(0x7000D6); //RGB order and packet number in blanking period
@@ -258,8 +266,8 @@ void lp079x01_init(void)
 	spi_24bit_3wire(0x720000);
 
 	spi_24bit_3wire(0x7000BA); //lane speed=560
-	spi_24bit_3wire(0x72C015); //may modify according to requirement, 500Mbps to  560Mbps, (n+1)*12M
-	
+	spi_24bit_3wire(0x72C24B); //may modify according to requirement, 500Mbps to  560Mbps, (n+1)*12M
+							   //8025->450Mbps
 	spi_24bit_3wire(0x7000BB); //LP clock
 	spi_24bit_3wire(0x720008);
 
