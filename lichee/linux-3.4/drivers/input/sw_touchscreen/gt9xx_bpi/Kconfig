@@ -1,0 +1,21 @@
+#
+# SW Touchscreen driver configuration
+#
+menuconfig SW_TOUCHSCREEN_GT9XX_BPI
+	bool "bpi gt9xx Touchscreens driver"
+	help
+	  Say Y here, and a list of supported touchscreens will be displayed.
+	  This option doesn't affect the kernel.
+
+	  If unsure, say Y.
+
+if SW_TOUCHSCREEN_GT9XX_BPI
+
+config  SW_TOUCHSCREEN_GT9XX_BPI_TS
+       tristate  "bpi gt9xxtouchscreen driver"      
+       depends on INPUT && I2C
+       default m
+       help
+         gt9xx touchscreen driver    
+         
+endif

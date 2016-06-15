@@ -58,9 +58,16 @@ config TOUCHSCREEN_ILITEK
        help
          ilitek touchscreen driver
                   
+config SW_TOUCHSCREEN_PIXCIR_BPI
+       tristate  "bpi pixcir touchscreen driver"
+       default m
+       depends on INPUT && I2C
+       help
+         bpi pixcir touchscreen driver
          
 source "drivers/input/sw_touchscreen/ft5x/Kconfig"
 
 source "drivers/input/sw_touchscreen/gt9xx/Kconfig"
+source "drivers/input/sw_touchscreen/gt9xx_bpi/Kconfig"
 
 endif

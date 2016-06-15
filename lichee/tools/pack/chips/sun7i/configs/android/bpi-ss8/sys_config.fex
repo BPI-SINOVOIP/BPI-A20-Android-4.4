@@ -308,7 +308,7 @@ manual_cs = 0
 ;-------------------------------------------------------------------------------
 [ctp_para]
 ctp_used                = 1
-ctp_name            	= "gt911_group0"
+ctp_name            	= "gt911_group3"
 ctp_twi_id              = 3
 ctp_twi_addr		= 0x14
 ctp_screen_max_x        = 800
