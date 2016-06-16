@@ -895,7 +895,7 @@ static void pixcir_sleep(struct pixcir_i2c_ts_data *tsdata)
 	pr_info("%s\n", __func__);
 
 	wrbuf[0] = 0x33;
-	wrbuf[1] = 0x03; //enter into Sleep mode;
+	wrbuf[1] = 0x01; //enter into Sleep mode;
 		
 	/**************************************************************
 	 wrbuf[1]:	0x00: Active mode
@@ -941,7 +941,7 @@ static void pixcir_ts_early_suspend(struct early_suspend *h)
 	
 	pr_info("%s\n", __func__);
 	
-	ctp_irq_disable(tsdata);
+	//ctp_irq_disable(tsdata);
 	pixcir_sleep(tsdata);
 }
 
@@ -949,8 +949,11 @@ static void pixcir_ts_late_resume(struct early_suspend *h)
 {
 	struct pixcir_i2c_ts_data *tsdata;
 	tsdata = container_of(h, struct pixcir_i2c_ts_data, early_suspend);
+
+	pr_info("%s\n", __func__);
+	
 	pixcir_wakeup(tsdata);
-	ctp_irq_enable(tsdata);
+	//ctp_irq_enable(tsdata);
 }
 #else
 
@@ -961,7 +964,7 @@ static int pixcir_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 
 	pr_info("%s\n", __func__);
 
-	ctp_irq_disable(tsdata);
+	//ctp_irq_disable(tsdata);
 	pixcir_sleep(tsdata);
 
 	//if (device_may_wakeup(&tsdata->client->dev)) enable_irq_wake(tsdata->irq);
@@ -974,7 +977,7 @@ static int pixcir_ts_resume(struct i2c_client *client)
 	struct pixcir_i2c_ts_data *tsdata = i2c_get_clientdata(client);
 
 	pixcir_wakeup(tsdata);
-	ctp_irq_enable(tsdata);
+	//ctp_irq_enable(tsdata);
 
 	//if (device_may_wakeup(&tsdata->client->dev)) disable_irq_wake(tsdata->irq);
 
