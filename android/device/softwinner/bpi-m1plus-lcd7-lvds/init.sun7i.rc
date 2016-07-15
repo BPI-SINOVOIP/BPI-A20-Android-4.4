@@ -15,14 +15,14 @@ on init
     
 on early-fs
     mount_all /fstab.sun7i
-    setprop ro.crypto.fuse_sdcard true
+    #setprop ro.crypto.fuse_sdcard true
     insmod  /system/vendor/modules/disp.ko
     insmod  /system/vendor/modules/lcd.ko
     insmod  /system/vendor/modules/hdmi.ko
     insmod  /system/vendor/modules/hdcp.ko
     
 # insmod mali driver
-	#insmod /system/vendor/modules/ump.ko
+    insmod /system/vendor/modules/ump.ko
     insmod /system/vendor/modules/mali.ko
     chmod 777 /dev/ump
     chmod 777 /dev/mali
