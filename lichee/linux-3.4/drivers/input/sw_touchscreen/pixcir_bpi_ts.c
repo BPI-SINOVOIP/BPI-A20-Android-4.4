@@ -895,7 +895,7 @@ static void pixcir_sleep(struct pixcir_i2c_ts_data *tsdata)
 	pr_info("%s\n", __func__);
 
 	wrbuf[0] = 0x33;
-	wrbuf[1] = 0x01; //enter into Sleep mode;
+	wrbuf[1] = 0x03; //enter into Freeze mode;
 		
 	/**************************************************************
 	 wrbuf[1]:	0x00: Active mode
@@ -915,7 +915,7 @@ static void pixcir_sleep(struct pixcir_i2c_ts_data *tsdata)
 
 static void pixcir_wakeup(struct pixcir_i2c_ts_data *tsdata)
 {
-#if 0
+#if 1
 	pixcir_reset();
 #else
 	unsigned char wrbuf[2] = { 0 };
@@ -940,8 +940,11 @@ static void pixcir_ts_early_suspend(struct early_suspend *h)
 	tsdata = container_of(h, struct pixcir_i2c_ts_data, early_suspend);
 	
 	pr_info("%s\n", __func__);
-	
+
+	sw_gpio_eint_set_enable(GTP_INT_GPIO,0);
 	//ctp_irq_disable(tsdata);
+    	cancel_work_sync(&tsdata->work);
+  	flush_workqueue(pixcir_wq);
 	pixcir_sleep(tsdata);
 }
 
@@ -954,6 +957,7 @@ static void pixcir_ts_late_resume(struct early_suspend *h)
 	
 	pixcir_wakeup(tsdata);
 	//ctp_irq_enable(tsdata);
+	sw_gpio_eint_set_enable(GTP_INT_GPIO,1); 
 }
 #else
 
