@@ -571,11 +571,13 @@ int bcmsdh_set_drvdata(void * dhdp)
 }
 
 #if defined(OOB_INTR_ONLY)
+
 #define CONFIG_ARCH_SUN6I_BCMDHD 1
 static int wl_host_wake = 0;
 
 extern int gpio_request(unsigned gpio, const char *label);
 extern void gpio_free(unsigned gpio);
+
 void bcmsdh_oob_intr_set(bool enable)
 {
 	static bool curstate = 1;
@@ -583,18 +585,19 @@ void bcmsdh_oob_intr_set(bool enable)
 
 	spin_lock_irqsave(&sdhcinfo->irq_lock, flags);
 	if (curstate != enable) {
-		if (enable)
+		if (enable) {
 #ifndef CONFIG_ARCH_SUN6I_BCMDHD
             enable_irq(sdhcinfo->oob_irq);
 #else
-            sw_gpio_eint_set_enable(wl_host_wake, 1);            
+            sw_gpio_eint_set_enable(wl_host_wake, 1);
 #endif
-        else
+		} else {
 #ifndef CONFIG_ARCH_SUN6I_BCMDHD
             disable_irq_nosync(sdhcinfo->oob_irq);
 #else
-            sw_gpio_eint_set_enable(wl_host_wake, 0);            
-#endif		
+            sw_gpio_eint_set_enable(wl_host_wake, 0);
+#endif
+		}
 		curstate = enable;
 	}
 	spin_unlock_irqrestore(&sdhcinfo->irq_lock, flags);
@@ -620,19 +623,24 @@ static irqreturn_t wlan_oob_irq(int irq, void *dev_id)
 }
 
 #if 1
-u32 irq_hand = NULL;
+u32 irq_hand = 0;
 u32 eint_handle(void *para)
 {
-	wlan_oob_irq(0, NULL);
+	unsigned int penable = 0;
+	int ret = -1;
+	ret = sw_gpio_eint_get_enable(wl_host_wake, &penable);
+	if (ret == 0 && penable == 1)
+		wlan_oob_irq(0, NULL);
 	return 0;
 }
 #endif
+
 int bcmsdh_register_oob_intr(void * dhdp)
 {
 	int error = 0;
 	script_item_u val ;
 	script_item_value_type_e type;
-
+	
 	SDLX_MSG(("%s: Enter \n", __FUNCTION__));
 
 	/* IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL | IORESOURCE_IRQ_SHAREABLE; */
@@ -641,15 +649,16 @@ int bcmsdh_register_oob_intr(void * dhdp)
 		printk("get bcmdhd ap6xxx_wl_host_wake gpio failed\n");
 	else
 		wl_host_wake = val.gpio.gpio;
-
-	dev_set_drvdata(sdhcinfo->dev, dhdp);
+	 dev_set_drvdata(sdhcinfo->dev, dhdp);
 
 	if (!sdhcinfo->oob_irq_registered) {
 		SDLX_MSG(("%s: IRQ=%d Type=%X \n", __FUNCTION__,
 			(int)sdhcinfo->oob_irq, (int)sdhcinfo->oob_flags));
-		/* Refer to customer Host IRQ docs about proper irqflags definition */
+#ifndef BCMDHD_OOB_LOW_LEVEL_TRIGGER
 	irq_hand = sw_gpio_irq_request(wl_host_wake, TRIG_LEVL_HIGH, eint_handle, NULL);
-	
+#else
+	irq_hand = sw_gpio_irq_request(wl_host_wake, TRIG_LEVL_LOW, eint_handle, NULL);
+#endif
 	if(0 == irq_hand)
 		printk("sw_gpio_irq_request err\n");
 
@@ -680,7 +689,6 @@ void bcmsdh_set_irq(int flag)
 #else
 			sw_gpio_eint_set_enable(wl_host_wake, 1);
 #endif
-
 #if defined(CONFIG_ARCH_RHEA) || defined(CONFIG_ARCH_CAPRI) || defined(CONFIG_ARCH_SUN6I_BCMDHD)
 			if (device_may_wakeup(sdhcinfo->dev))
 #endif

@@ -28,6 +28,7 @@
 #include <wl_cfgp2p.h>
 #include <wldev_common.h>
 #include <wl_android.h>
+#include <dhd_config.h>
 
 static s8 scanparambuf[WLC_IOCTL_SMLEN];
 static s8 g_mgmt_ie_buf[2048];
@@ -733,6 +734,11 @@ wl_cfgp2p_disable_discovery(struct wl_priv *wl)
 	s32 ret = BCME_OK;
 	CFGP2P_DBG((" enter\n"));
 	wl_clr_p2p_status(wl, DISCOVERY_ON);
+
+	if(!wl->p2p) { // terence 20130113: Fix for p2p NULL pointer
+		CFGP2P_ERR(("wl->p2p is NULL\n"));
+		goto exit;
+	}
 
 	if (wl_to_p2p_bss_bssidx(wl, P2PAPI_BSSCFG_DEVICE) == 0) {
 		CFGP2P_ERR((" do nothing, not initialized\n"));
@@ -1616,8 +1622,9 @@ wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct net_device *ndev,
 		if (notify)
 			if (ndev && ndev->ieee80211_ptr) {
 #if defined(WL_CFG80211_P2P_DEV_IF)
-				cfg80211_remain_on_channel_expired(wdev, wl->last_roc_id,
-					&wl->remain_on_chan, GFP_KERNEL);
+				if (wdev) // terence 20140106: fix for NULL pointer of wdev
+					cfg80211_remain_on_channel_expired(wdev, wl->last_roc_id,
+						&wl->remain_on_chan, GFP_KERNEL);
 #else
 				cfg80211_remain_on_channel_expired(ndev, wl->last_roc_id,
 					&wl->remain_on_chan, wl->remain_on_chan_type, GFP_KERNEL);
@@ -2384,6 +2391,9 @@ wl_cfgp2p_register_ndev(struct wl_priv *wl)
 	 */
 	wl->p2p_wdev = wdev;
 	wl->p2p_net = net;
+#ifdef POWER_OFF_IN_SUSPEND
+	g_p2pnetdev = net;
+#endif
 
 	printk("%s: P2P Interface Registered\n", net->name);
 
@@ -2459,6 +2469,9 @@ static int wl_cfgp2p_if_open(struct net_device *net)
 		| BIT(NL80211_IFTYPE_P2P_GO));
 #endif /* !WL_IFACE_COMB_NUM_CHANNELS */
 	wl_cfg80211_do_driver_init(net);
+#ifdef POWER_OFF_IN_SUSPEND
+	g_p2pnet_enabled = true;
+#endif
 
 	return 0;
 }
@@ -2638,3 +2651,30 @@ wl_cfgp2p_del_p2p_disc_if(struct wireless_dev *wdev)
 	return 0;
 }
 #endif /* WL_CFG80211_P2P_DEV_IF */
+
+#ifdef POWER_OFF_IN_SUSPEND
+void
+wl_cfgp2p_start(void)
+{
+#if defined(WL_ENABLE_P2P_IF)
+	if (!g_p2pnet_enabled)
+		return;
+	if (g_p2pnetdev)
+		dev_open(g_p2pnetdev);
+#endif /* WL_CFG80211 && WL_ENABLE_P2P_IF */
+#if defined(WL_CFG80211_P2P_DEV_IF)
+	wl_cfgp2p_start_p2p_device(NULL, NULL);
+#endif
+}
+
+void
+wl_cfgp2p_stop(void)
+{
+#if defined(WL_CFG80211_P2P_DEV_IF)
+	extern struct wl_priv *wlcfg_drv_priv;
+	struct wl_priv *wl = wlcfg_drv_priv;
+
+	wl_cfgp2p_stop_p2p_device(NULL, wl->p2p_wdev);
+#endif
+}
+#endif

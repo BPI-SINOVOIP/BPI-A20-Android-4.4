@@ -18,8 +18,10 @@
 
 #include <mach/sys_config.h>
 #include <mach/gpio.h>
+
 #define WL_ERROR(x) printf x
-#define WL_TRACE(x)
+#define WL_TRACE(x) printf x
+
 extern void sw_mci_rescan_card(unsigned id, unsigned insert);
 extern void wifi_pm_power(int on);
 
@@ -129,7 +131,7 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 		type = script_get_item("wifi_para", "wifi_sdc_id", &val);
 		if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
 			WL_ERROR(("failed to fetch sdio card's sdcid\n"));
-			return;
+			return ;
 		}
 		sdc_id = val.val;
 		first = 0;

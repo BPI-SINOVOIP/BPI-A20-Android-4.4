@@ -4583,6 +4583,11 @@ dhd_bus_init(dhd_pub_t *dhdp, bool enforce_mutex)
 	if (enforce_mutex)
 		dhd_os_sdlock(bus->dhd);
 
+	if (bus->sih->chip == BCM43362_CHIP_ID) {
+		printf("%s: delay 100ms for BCM43362\n", __FUNCTION__);
+		OSL_DELAY(100000); // terence 20131209: delay for 43362
+	}
+
 	/* Make sure backplane clock is on, needed to generate F2 interrupt */
 	dhdsdio_clkctl(bus, CLK_AVAIL, FALSE);
 	if (bus->clkstate != CLK_AVAIL) {
@@ -6969,7 +6974,7 @@ dhdsdio_probe(uint16 venid, uint16 devid, uint16 bus_no, uint16 slot,
 	dhd_doflow = TRUE;
 #else
 	dhd_doflow = FALSE;
-#endif /* OEM_ANDROID */
+#endif
 	dhd_dongle_ramsize = 0;
 	dhd_txminmax = DHD_TXMINMAX;
 
@@ -7058,6 +7063,17 @@ dhdsdio_probe(uint16 venid, uint16 devid, uint16 bus_no, uint16 slot,
 		DHD_ERROR(("%s: dhdsdio_probe_attach failed\n", __FUNCTION__));
 		goto fail;
 	}
+	
+#ifdef PROP_TXSTATUS
+	// terence 20131215: disable_proptx should be set before dhd_attach
+	if (bus->sih->chip == BCM4339_CHIP_ID) {
+		printf("%s: Enable prop_txstatus\n", __FUNCTION__);
+		disable_proptx = 0;
+	} else {
+		printf("%s: Disable prop_txstatus\n", __FUNCTION__);
+		disable_proptx = 1;
+	}
+#endif
 
 	/* Attach to the dhd/OS/network interface */
 	if (!(bus->dhd = dhd_attach(osh, bus, SDPCM_RESERVE))) {
@@ -8446,6 +8462,7 @@ dhd_bus_devreset(dhd_pub_t *dhdp, uint8 flag)
 					/* Re-init bus, enable F2 transfer */
 					bcmerror = dhd_bus_init((dhd_pub_t *) bus->dhd, FALSE);
 					if (bcmerror == BCME_OK) {
+						bcmsdh_set_drvdata(dhdp); // terence 20131214: fix for null pointer issue
 #if defined(OOB_INTR_ONLY)
 						/* make sure oob intr get registered */
 						if (!bcmsdh_is_oob_intr_registered()) {

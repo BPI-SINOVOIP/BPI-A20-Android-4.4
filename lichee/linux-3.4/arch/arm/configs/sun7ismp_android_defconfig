@@ -1228,11 +1228,9 @@ CONFIG_WLAN=y
 # CONFIG_BCM4330 is not set
 # CONFIG_B43LEGACY is not set
 CONFIG_BCMDHD=m
-CONFIG_BCMDHD_FW_PATH="/system/vendor/modules/fw_bcmxxxx.bin"
-CONFIG_BCMDHD_NVRAM_PATH="/system/vendor/modules/nvram_apxxxx.txt"
-CONFIG_BCMDHD_CONFIG_PATH="/system/etc/firmware/config.txt"
 CONFIG_BCMDHD_OOB=y
 # CONFIG_BCMDHD_SDIO_IRQ is not set
+# CONFIG_BCMDHD_OOB_LOW_LEVEL_TRIGGER is not set
 # CONFIG_BRCMFMAC is not set
 # CONFIG_HOSTAP is not set
 # CONFIG_IWM is not set

@@ -235,7 +235,7 @@ dhd_common_init(osl_t *osh)
 	nv_path[0] = '\0';
 #endif /* CONFIG_BCMDHD_NVRAM_PATH */
 #ifdef CONFIG_BCMDHD_CONFIG_PATH
-	bcm_strncpy_s(conf_path, sizeof(conf_path), CONFIG_BCMDHD_CONFIG_PATH, MOD_PARAM_PATHLEN-1);
+	bcm_strncpy_s(conf_path, sizeof(conf_path), "/system/vendor/modules/config.txt", MOD_PARAM_PATHLEN-1);
 #else /* CONFIG_BCMDHD_CONFIG_PATH */
 	conf_path[0] = '\0';
 #endif /* CONFIG_BCMDHD_CONFIG_PATH */
@@ -1313,16 +1313,21 @@ wl_host_event(dhd_pub_t *dhd_pub, int *ifidx, void *pktdata,
 		}
 #endif /* WL_CFG80211 */
 		if (ifevent->ifidx > 0 && ifevent->ifidx < DHD_MAX_IFS) {
-			if (ifevent->action == WLC_E_IF_ADD) {
-				if (dhd_add_if(dhd_pub->info, ifevent->ifidx, NULL, event->ifname,
-					event->addr.octet, ifevent->flags, ifevent->bssidx)) {
-					DHD_ERROR(("%s: dhd_add_if failed!! ifidx: %d for %s\n",
-						__FUNCTION__, ifevent->ifidx, event->ifname));
-					return (BCME_ERROR);
-				}
-			}
-			else if (ifevent->action == WLC_E_IF_DEL)
-				dhd_del_if(dhd_pub->info, ifevent->ifidx);
+					if (ifevent->action == WLC_E_IF_ADD) {
+						if (dhd_add_if(dhd_pub->info, ifevent->ifidx,
+							NULL, event->ifname,
+							event->addr.octet,
+							ifevent->flags, ifevent->bssidx)) {
+							DHD_ERROR(("%s: dhd_add_if failed!!"
+									" ifidx: %d for %s\n",
+									__FUNCTION__,
+									ifevent->ifidx,
+									event->ifname));
+							return (BCME_ERROR);
+						}
+					}
+					else if (ifevent->action == WLC_E_IF_DEL)
+						dhd_del_if(dhd_pub->info, ifevent->ifidx);
 		} else {
 #ifndef PROP_TXSTATUS
 			DHD_ERROR(("%s: Invalid ifidx %d for %s\n",
@@ -1510,6 +1515,8 @@ dhd_pktfilter_offload_enable(dhd_pub_t * dhd, char *arg, int enable, int master_
 
 	/* Parse packet filter id. */
 	enable_parm.id = htod32(strtoul(argv[i], NULL, 0));
+	if (dhd_conf_del_pkt_filter(dhd, enable_parm.id))
+		goto fail;
 
 	/* Parse enable/disable value. */
 	enable_parm.enable = htod32(enable);
@@ -1523,19 +1530,19 @@ dhd_pktfilter_offload_enable(dhd_pub_t * dhd, char *arg, int enable, int master_
 	rc = dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, buf, buf_len, TRUE, 0);
 	rc = rc >= 0 ? 0 : rc;
 	if (rc)
-		DHD_TRACE(("%s: failed to add pktfilter %s, retcode = %d\n",
-		__FUNCTION__, arg, rc));
+		DHD_TRACE(("%s: failed to %s pktfilter %s, retcode = %d\n",
+		__FUNCTION__, enable?"enable":"disable", arg, rc));
 	else
-		DHD_TRACE(("%s: successfully added pktfilter %s\n",
-		__FUNCTION__, arg));
+		DHD_TRACE(("%s: successfully %s pktfilter %s\n",
+		__FUNCTION__, enable?"enable":"disable", arg));
 
 	/* Contorl the master mode */
 	bcm_mkiovar("pkt_filter_mode", (char *)&master_mode, 4, buf, sizeof(buf));
 	rc = dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, buf, sizeof(buf), TRUE, 0);
 	rc = rc >= 0 ? 0 : rc;
 	if (rc)
-		DHD_TRACE(("%s: failed to add pktfilter %s, retcode = %d\n",
-		__FUNCTION__, arg, rc));
+		DHD_TRACE(("%s: failed to set pkt_filter_mode %d, retcode = %d\n",
+		__FUNCTION__, master_mode, rc));
 
 fail:
 	if (arg_org)
@@ -1600,6 +1607,8 @@ dhd_pktfilter_offload_set(dhd_pub_t * dhd, char *arg)
 
 	/* Parse packet filter id. */
 	pkt_filter.id = htod32(strtoul(argv[i], NULL, 0));
+	if (dhd_conf_del_pkt_filter(dhd, pkt_filter.id))
+		goto fail;
 
 	if (argv[++i] == NULL) {
 		DHD_ERROR(("Polarity not provided\n"));
@@ -1690,6 +1699,9 @@ void dhd_pktfilter_offload_delete(dhd_pub_t *dhd, int id)
 		DHD_ERROR(("%s: Failed to delete filter ID:%d, ret=%d\n",
 			__FUNCTION__, id, ret));
 	}
+	else
+		DHD_TRACE(("%s: successfully deleted pktfilter %d\n",
+		__FUNCTION__, id));
 }
 #endif /* PKT_FILTER_SUPPORT */
 
