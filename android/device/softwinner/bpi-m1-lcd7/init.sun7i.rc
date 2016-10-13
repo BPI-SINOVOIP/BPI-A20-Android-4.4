@@ -4,7 +4,10 @@ on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/sdcard 0700 shell shell
     mkdir /mnt/extsd 0700 shell shell
-    mkdir /mnt/usbhost 0700 shell shell
+    mkdir /mnt/sata 0700 shell shell
+    mkdir /mnt/usbhost0 0700 shell shell
+    mkdir /mnt/usbhost1 0700 shell shell
+    mkdir /mnt/usbhost2 0700 shell shell
 
     symlink /mnt/sdcard /sdcard
     export EXTERNAL_STORAGE /mnt/sdcard
