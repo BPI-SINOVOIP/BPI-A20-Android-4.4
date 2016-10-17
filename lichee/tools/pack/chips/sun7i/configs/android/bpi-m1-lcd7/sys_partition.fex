@@ -63,41 +63,47 @@ size = 16384
 
 ;------------------------------>mmcblk0p8/nande
 [partition]
-    name         = data
-    size         = 1310720
-    user_type    = 0x8000
-
-;------------------------------>mmcblk0p9/nandf
-[partition]
-    name         = misc
-    size         = 32768
-    user_type    = 0x8000
-
-;------------------------------>mmcblk0p10/nandg
-[partition]
     name         = recovery
     size         = 65536
     downloadfile = "recovery.fex"
     user_type    = 0x8000
 
-;------------------------------>mmcblk0p11/nandh
-[partition]
-    name         = cache
-    size         = 1310720
-    user_type    = 0x8000
-
-;------------------------------>nandi, data image backup
+;------------------------------>mmcblk0p9/nandf
 [partition]
     name         = databk
     size         = 524288
     user_type    = 0x8000
-
-;------------------------------>nandj, data image private
+    
+;------------------------------>mmcblk0p11/nandg
+[partition]
+    name         = misc
+    size         = 32768
+    user_type    = 0x8000
+    
+    
+;------------------------------>nandh
 [partition]
     name         = private
     size         = 32768
-    ro           = 0
     user_type    = 0x8000
+    keydata      = 1
+    
+
+
+
+;------------------------------>mmcblk0p10/nandi
+[partition]
+	name         = data
+    size         = 2097152
+    user_type    = 0xc100
+
+    
+;------------------------------>nandj
+[partition]
+    name         = cache
+    size         = 655360
+    user_type    = 0xc100	
+
 
 ;------------------------------>nandk, UDISK
 [partition]
