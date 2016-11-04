@@ -35,6 +35,7 @@ function pack_info()
 # define option, format:
 #   'long option' 'default value' 'help message' 'short option'
 DEFINE_string 'chip' '' 'chip to build, e.g. sun7i' 'c'
+DEFINE_string 'version' '' 'platform versioin, e.g 4.4' 'v'
 DEFINE_string 'platform' '' 'platform to build, e.g. linux, android' 'p'
 DEFINE_string 'board' '' 'board to build, e.g. evb' 'b'
 DEFINE_string 'boot_type' '' 'boot type, e.g. nand, card0, card2' 'B'
@@ -46,6 +47,7 @@ FLAGS "$@" || exit $?
 eval set -- "${FLAGS_ARGV}"
 
 PACK_CHIP=${FLAGS_chip}
+PACK_VERSION=${FLAGS_version}
 PACK_PLATFORM=${FLAGS_platform}
 PACK_BOARD=${FLAGS_board}
 PACK_DEBUG=${FLAGS_debug_mode}
@@ -281,15 +283,15 @@ function do_pack_android()
     local IMG_NAME
     if [ $PACK_DEBUG = "card0" ] ; then
         if [ ${PACK_SIG} = "sig" ]; then
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_SIG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_SIG}_${PACK_TIME}.img"
         else
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
         fi
     else
         if [ ${PACK_SIG} = "sig" ]; then
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_SIG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_SIG}_${PACK_TIME}.img"
         else
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_TIME}.img"
         fi
     fi
     
@@ -374,9 +376,9 @@ function do_pack_linux()
     
     local IMG_NAME
     if [ $PACK_DEBUG = "card0" ] ; then
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
     else
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_TIME}.img"
     fi
     
     echo "imagename = ${IMG_NAME}" >> image.cfg
@@ -444,9 +446,9 @@ function do_pack_dragonboard()
     
     local IMG_NAME
     if [ $PACK_DEBUG = "card0" ] ; then
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
     else
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_TIME}.img"
     fi
     
     echo "imagename = ${IMG_NAME}" >> image.cfg
@@ -524,9 +526,9 @@ function do_pack_prvt()
     
     local IMG_NAME
     if [ $PACK_DEBUG = "card0" ] ; then
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_TIME}.img"
     else
-        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_TIME}.img"
+        IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_VERSION}_${PACK_BOARD}_${PACK_TIME}.img"
     fi
     
     echo "imagename = ${IMG_NAME}" >> image.cfg
