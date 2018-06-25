@@ -119,8 +119,8 @@ struct gt911_cfg_array {
 	unsigned int    size;
 	uint8_t         *config_info;
 } gt9xx_cfg_grp[] = {
-	{"gt911_group1",        ARRAY_SIZE(gt911_group1),       gt911_group1},
-	{"gt911_group2",        ARRAY_SIZE(gt911_group2),       gt911_group2},
+	{"bpi_lcd7",        ARRAY_SIZE(gt911_group1),       gt911_group1},
+	{"bpi_lcd5",        ARRAY_SIZE(gt911_group2),       gt911_group2},
 };
 
 static int gtp_find_cfg_idx(const char* name)

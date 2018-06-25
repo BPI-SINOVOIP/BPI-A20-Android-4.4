@@ -39,8 +39,8 @@ on fs
 
 on boot
 # use automatic detecttion insmod ctp & gsensor driver
-#    insmod /system/vendor/modules/sw_device.ko
-    insmod /system/vendor/modules/ft5x_ts.ko
+    insmod /system/vendor/modules/sw_device.ko
+#    insmod /system/vendor/modules/ft5x_ts.ko
 
 # insmod video driver
     insmod /system/vendor/modules/cedarx.ko
